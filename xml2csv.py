@@ -5,9 +5,6 @@ import xml.dom.minidom
 import os
 import csv
 
-
-# D:\Work\Выгрузка ЗП в СБ\1866665z.xml
-
 aFiles = [x for x in os.listdir() if x.endswith("z.xml")]
 print(aFiles)
 
@@ -26,15 +23,15 @@ for xFile in aFiles:
         #print (attr)
         for xvalue in attr.childNodes:
           #print (str(xvalue))
-          if attr.tagName in ['ЛицевойСчет','Фамилия','Имя','Отчество','Сумма']:
-            if attr.tagName == 'ЛицевойСчет':
+          if attr.tagName in ['Р›РёС†РµРІРѕР№РЎС‡РµС‚','Р¤Р°РјРёР»РёСЏ','РРјСЏ','РћС‚С‡РµСЃС‚РІРѕ','РЎСѓРјРјР°']:
+            if attr.tagName == 'Р›РёС†РµРІРѕР№РЎС‡РµС‚':
               LC = str(xvalue.nodeValue)
-            if attr.tagName == 'Фамилия':
+            if attr.tagName == 'Р¤Р°РјРёР»РёСЏ':
               FM = str(xvalue.nodeValue)
-            if attr.tagName == 'Имя':
+            if attr.tagName == 'РРјСЏ':
               IM = str(xvalue.nodeValue)
-            if attr.tagName == 'Отчество':
+            if attr.tagName == 'РћС‚С‡РµСЃС‚РІРѕ':
               OT = str(xvalue.nodeValue)
-            if attr.tagName == 'Сумма':
+            if attr.tagName == 'РЎСѓРјРјР°':
               SS = str(xvalue.nodeValue)
       csv_file.writerow([LC, FM, IM, OT, SS])
