@@ -34,4 +34,4 @@ for xFile in aFiles:
               OT = str(xvalue.nodeValue)
             if attr.tagName == 'Сумма':
               SS = str(xvalue.nodeValue)
-      csv_file.writerow([LC, FM, IM, OT, SS])
+      csv_file.writerow([LC,FM,IM,OT, SS])

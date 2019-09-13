@@ -19,3 +19,4 @@ If Adir(aFiles, '???????z.xml') > 0
 		Set Textmerge To
 	Next
 Endif
+
