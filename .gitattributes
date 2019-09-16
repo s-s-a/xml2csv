@@ -40,9 +40,9 @@
 #
 # image files are treated as binary by default.
 ###############################################################################
-#*.jpg   binary
-#*.png   binary
-#*.gif   binary
+*.jpg   binary
+*.png   binary
+*.gif   binary
 
 ###############################################################################
 # diff behavior for common document formats
@@ -62,14 +62,16 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 
-**.[Pp}[Rr][Gg]		text working-tree-encoding=cp1251
-**.[Ss][Qq][Ll]		text working-tree-encoding=cp1251
-**.??[2Aa]		text working-tree-encoding=cp1251
-**.[Pp][Jj][Mm]		text working-tree-encoding=cp1251
-**.[Mm][Dd]		text working-tree-encoding=utf-8
-**.[PpYy]		text working-tree-encoding=cp1251
-**.[Ff][Pp][Ww]		text working-tree-encoding=cp1251
+**.[Pp}[Rr][Gg]		text working-tree-encoding=cp1251 encoding=cp1251
+**.[Ss][Qq][Ll]		text working-tree-encoding=cp1251 encoding=cp1251
+**.??[2Aa]		text working-tree-encoding=cp1251 encoding=cp1251
+**.[Pp][Jj][Mm]		text working-tree-encoding=cp1251 encoding=cp1251
+**.[Ff][Pp][Ww]		text working-tree-encoding=cp1251 encoding=cp1251
+**.[Hh]		text working-tree-encoding=cp1251 diff=cpp encoding=cp1251
+
+**.[Mm][Dd]		text working-tree-encoding=utf-8 encoding=utf-8
+**.[PpYy]		text working-tree-encoding=cp1251 diff=python encoding=cp1251
 
 **.[Dd][Oo][Cc][Xx]	diff=word
 **.[Rr][Tt][Ff]	diff=word
-Soluion.xml   text working-tree-encoding=cp1251
+Soluion.xml   text working-tree-encoding=cp1251 encoding=cp1251
