@@ -37,7 +37,7 @@ obj/*
 packages/
 # VS Code folder
 **/.vscode
-
+**/.idea
 
 # Specific files
 *.[Ee][Xx][Ee]
