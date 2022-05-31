@@ -1,37 +1,32 @@
-#!/usr/bin/python3
-# coding=windows-1251
-from xml.dom.minidom import parse
-import xml.dom.minidom
-import os
+# -*- coding=windows-1251
+# noinspection PyCompatibility
 import csv
+import os
+from xml.dom.minidom import parse
 
-aFiles = [x for x in os.listdir() if x.endswith("z.xml")]
-print(aFiles)
+aFiles:list = [x for x in os.listdir() if x.endswith("z.xml")]
 
-# Open XML document using minidom parser
 for xFile in aFiles:
-  #print (xFile)
-  with open(xFile[0:8]+'.csv', 'w', encoding='cp1251', errors='replace', newline='') as csvfile:
-    csv_file = csv.writer(csvfile, delimiter=';')
-    #print (csvfile.name)
-    DOMTree = xml.dom.minidom.parse(xFile)
-    #print (DOMTree.childNodes.item(0).childNodes.item(0).childNodes)
-    for sotr in DOMTree.childNodes.item(0).childNodes.item(0).childNodes:
-      #print (sotr)
-      LC = FM = IM = OT = SS = ''
-      for attr in sotr.childNodes:
-        #print (attr)
-        for xvalue in attr.childNodes:
-          #print (str(xvalue))
-          if attr.tagName in ['Р›РёС†РµРІРѕР№РЎС‡РµС‚','Р¤Р°РјРёР»РёСЏ','РРјСЏ','РћС‚С‡РµСЃС‚РІРѕ','РЎСѓРјРјР°']:
-            if attr.tagName == 'Р›РёС†РµРІРѕР№РЎС‡РµС‚':
-              LC = str(xvalue.nodeValue)
-            if attr.tagName == 'Р¤Р°РјРёР»РёСЏ':
-              FM = str(xvalue.nodeValue)
-            if attr.tagName == 'РРјСЏ':
-              IM = str(xvalue.nodeValue)
-            if attr.tagName == 'РћС‚С‡РµСЃС‚РІРѕ':
-              OT = str(xvalue.nodeValue)
-            if attr.tagName == 'РЎСѓРјРјР°':
-              SS = str(xvalue.nodeValue)
-      csv_file.writerow([LC,FM,IM,OT, SS])
+    with open(xFile[0:8] + '.csv', 'w', encoding='cp1251', errors='replace', newline='') as csvfile:
+        csv_file = csv.writer(csvfile, delimiter=';')
+        DOMTree = parse(xFile)
+        count:int = 0
+        for sotr in DOMTree.getElementsByTagName('Сотрудник'):
+            count += 1
+            # print (sotr)
+            LC = FM = IM = OT = SS = ''
+            LC = sotr.getElementsByTagName('ЛицевойСчет').item(0).firstChild.nodeValue
+            FM = sotr.getElementsByTagName('Фамилия').item(0).firstChild.nodeValue
+            IM = sotr.getElementsByTagName('Имя').item(0).firstChild.nodeValue
+            try:
+                OT = sotr.getElementsByTagName('Отчество').item(0).firstChild.nodeValue
+            except AttributeError:
+                pass #  Игнорируем пустое отчетство у иностранцев
+            #  replace'ами удаляем последствия повышения "человекочитаемости"
+            SS = sotr.getElementsByTagName('Сумма').item(0).firstChild.nodeValue.replace('\t', '').replace('\n', '')
+            if len(SS) == 0:
+                SS = sotr.getElementsByTagName('Сумма').item(1).firstChild.nodeValue
+            print(LC, FM, IM, OT, SS)
+            csv_file.writerow([LC, FM, IM, OT, SS])
+
+    print(f'Записей в файле {xFile}: {count}')
